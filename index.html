@@ -29,23 +29,23 @@
             overflow-x: hidden;
         }
 
-        /* --- VIDITELNÝ INDIKÁTOR NA LEVÉ STRANĚ S ANIMACÍ --- */
+        /* --- VIDITELNÝ INDIKÁTOR NA LEVÉ STRANĚ --- */
         .sidebar-hint {
             position: fixed;
             top: 50%;
             left: 0;
             transform: translateY(-50%);
-            width: 22px;
-            height: 75px;
+            width: 24px;
+            height: 80px;
             background: linear-gradient(135deg, #a855f7, #7c3aed);
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
-            z-index: 998;
+            z-index: 1001; /* Aby byla vždy nad spouštěčem */
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             box-shadow: 3px 0 15px rgba(168, 85, 247, 0.6);
             pointer-events: none;
             animation: pulse-arrow 2s infinite ease-in-out;
@@ -67,29 +67,31 @@
             background: #120e1a;
             border-right: 1px solid rgba(255, 255, 255, 0.1);
             transition: left 0.3s ease;
-            z-index: 1000;
+            z-index: 1002;
             display: flex;
             flex-direction: column;
             box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* Neviditelná zóna pro zachycení myši u levého okraje */
+        /* Zvětšená zóna pro zachycení myši (široká 50px, pokrývá i místo se šipkou) */
         .sidebar-trigger {
             position: fixed;
             top: 0;
             left: 0;
-            width: 35px;
+            width: 50px;
             height: 100%;
-            z-index: 999;
+            z-index: 1000;
         }
 
-        /* Akce při najetí myši: vysune menu a schová indikátor */
-        .sidebar-trigger:hover + .sidebar,
+        /* Akce při najetí myši na spouštěč NEBO přímo na sidebar */
+        .sidebar-trigger:hover ~ .sidebar,
         .sidebar:hover {
             left: 0;
         }
 
-        .sidebar-trigger:hover ~ .sidebar-hint {
+        /* Skrytí šipky, když je sidebar otevřený */
+        .sidebar-trigger:hover ~ .sidebar-hint,
+        .sidebar:hover ~ .sidebar-hint {
             opacity: 0;
             animation: none;
         }
