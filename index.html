@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki – MystiLand</title>
+    
+    <!-- Logo v kartě prohlížeče -->
+    <link rel="icon" type="image/png" href="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068">
+    
+    <!-- FontAwesome Ikony -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #0b0711;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- HOVER / SIDEBAR PANEL (Vlevo) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: #120e1a;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Neviditelná zóna pro zachycení myši u levého okraje */
+        .sidebar-trigger {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 25px;
+            height: 100%;
+            z-index: 999;
+        }
+
+        /* Otevření při najetí myši na spouštěč nebo na samotný sidebar */
+        .sidebar-trigger:hover + .sidebar,
+        .sidebar:hover {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: #09060e;
+        }
+
+        .sidebar-header img {
+            height: 35px;
+            width: auto;
+        }
+
+        .sidebar-header span {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #a855f7;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin: 15px 0 8px 10px;
+        }
+
+        .menu-category:first-child {
+            margin-top: 0;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            background: rgba(168, 85, 247, 0.15);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        /* --- MOBILNÍ LIŠTA A TLAČÍTKO --- */
+        .mobile-topbar {
+            display: none;
+            background: #120e1a;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* --- HLAVNÍ OBSAH --- */
+        .main-content {
+            flex-grow: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 50px 20px 80px 20px;
+        }
+
+        .wiki-card {
+            background: #120e1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .wiki-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .read-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: #c084fc;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .wiki-text p {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .wiki-text a {
+            color: #c084fc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .wiki-text a:hover {
+            color: #e879f9;
+            text-decoration: underline;
+        }
+
+        /* Info boxy / Zvýraznění */
+        .info-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #a855f7;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px 0;
+        }
+
+        .info-box h3 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: step-counter;
+            margin-top: 15px;
+        }
+
+        .steps-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+            font-size: 1rem;
+        }
+
+        .steps-list li::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            background: #a855f7;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* --- DOLNÍ LIŠTA (PATIČKA) --- */
+        footer {
+            background-color: #050308;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 20px;
+            text-align: center;
+            color: #585366;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #a855f7;
+            text-decoration: none;
+        }
+
+        /* --- RESPONSIVITA PRO MOBILY --- */
+        @media (max-width: 900px) {
+            .sidebar {
+                left: -280px;
+                transition: left 0.3s ease;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .sidebar-trigger {
+                display: none; /* Na mobilu vypneme hover trigger, používá se tlačítko */
+            }
+            .mobile-topbar {
+                display: flex;
+            }
+            .main-content {
+                padding: 30px 15px;
+            }
+            .wiki-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MOBILNÍ HORNÍ LIŠTA S TLAČÍTKEM MENU -->
+    <div class="mobile-topbar">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068" alt="Logo" style="height: 30px;">
+            <span style="font-weight: 800; font-size: 1rem;">MystiLand WIKI</span>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i> Menu
+        </button>
+    </div>
+
+    <!-- HOVER SPOUŠTĚČ PRO DESKTOP (neviditelný pruh vlevo) -->
+    <div class="sidebar-trigger"></div>
+
+    <!-- BOČNÍ PANEL / WIKI NAVIGACE -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068" alt="Logo">
+            <span>MystiLand WIKI</span>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <!-- Obecné Info -->
+            <div class="menu-category">Obecné Info</div>
+            <li><a href="#" class="active"><i class="fa-solid fa-house"></i> Vítej na WIKI</a></li>
+            <li><a href="#"><i class="fa-solid fa-dragon"></i> Kdo vlastně jsme?</a></li>
+            <li><a href="#"><i class="fa-solid fa-circle-info"></i> Info pro nováčky</a></li>
+
+            <!-- Komunita -->
+            <div class="menu-category">Komunita</div>
+            <li><a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a></li>
+
+            <!-- Hra / Survival -->
+            <div class="menu-category">Hra</div>
+            <li><a href="#"><i class="fa-solid fa-tree"></i> Survival info</a></li>
+            <li><a href="#"><i class="fa-solid fa-gamepad"></i> Jak se připojit</a></li>
+        </ul>
+    </nav>
+
+    <!-- HLAVNÍ OBSAH STRÁNKY -->
+    <div class="main-content">
+        <div class="wiki-card">
+            
+            <h1 class="wiki-title">👋 Vítej na naší WIKI!</h1>
+            <div class="read-time">
+                <i class="fa-regular fa-clock"></i> Délka čtení: 1 min
+            </div>
+
+            <div class="wiki-text">
+                <p>
+                    Vítej na oficiální wiki serveru <strong>MystiLand</strong>. Na této wiki najdeš všechny informace o tomto serveru, a pokud ne, tak se neboj nás informovat na našem <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank">Discord serveru</a>.
+                </p>
+                <p>
+                    <strong>Jak nás můžeš informovat?</strong> Můžeš nás informovat na našem Discord serveru. Pokud tě zajímá více náš server, tak se koukni na naše sociální sítě nebo na náš web.
+                </p>
+                
+                <p>
+                    🌐 <strong>Web:</strong> <a href="https://mystiland.eu" target="_blank">mystiland.eu</a><br>
+                    🛒 <strong>Obchod:</strong> <a href="https://mystiland.eu/obchod" target="_blank">mystiland.eu/obchod</a>
+                </p>
+
+                <p style="margin-top: 15px; font-weight: 600; color: #ffffff;">
+                    Přejeme příjemnou hru!
+                </p>
+
+                <!-- Sekce připojení -->
+                <div class="info-box" style="margin-top: 40px;">
+                    <h3><i class="fa-solid fa-server" style="color: #a855f7;"></i> IP adresa serveru</h3>
+                    <p style="margin-bottom: 0; font-size: 1.2rem; font-weight: bold; color: #fff;">
+                        mc.mystiland.eu
+                    </p>
+                </div>
+
+                <h2 style="color: #ffffff; font-size: 1.5rem; margin-top: 35px; margin-bottom: 15px;">
+                    Jak se připojit z Javy
+                </h2>
+                <p>
+                    Na server MystiLand se můžeš připojit jak z originálního účtu, tak z neoriginálního (Warez).
+                </p>
+
+                <ol class="steps-list">
+                    <li>Zapni si Minecraft na požadované verzi a v hlavním menu klikni na <strong>Multiplayer</strong> (Hra pro více hráčů).</li>
+                    <li>Zvol možnost <strong>Add Server</strong> (Přidat server) pro uložení do seznamu, nebo <strong>Direct Connection</strong> (Přímé připojení) pro rychlý vstup.</li>
+                    <li>Do políčka pro IP adresu zadej adresu serveru <code>mc.mystiland.eu</code> (příp. <em>Již Brzy</em>) a klikni na <strong>Done</strong> (Hotovo).</li>
+                    <li>Klikni na server v seznamu a zvol <strong>Join Server</strong> (Připojit se).</li>
+                    <li>Na výzvu hry potvrď stažení resource packu.</li>
+                    <li>Po načtení se zaregistruj příkazem <code>/register heslo heslo</code> (pokud už účet máš, přihlas se příkazem <code>/login heslo</code>).</li>
+                </ol>
+
+                <div class="info-box" style="margin-top: 30px;">
+                    <h3><i class="fa-solid mobile-icon fa-mobile-screen-button" style="color: #a855f7;"></i> Jak se připojit z Bedrocku</h3>
+                    <p style="margin-bottom: 0; color: #cbd5e1;">
+                        Připojení z Bedrock edice je <strong>již brzy</strong>! Sleduj náš Discord pro aktuální informace.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PATIČKA -->
+    <footer>
+        © 2026 Mystiland.eu | Všechna práva vyhrazena. 
+        <br>Nejedná se o oficiální produkt Minecraftu. Nejsem spojen se společností Mojang Studios.
+    </footer>
+
+    <!-- JAVASCRIPT PRO OTEVÍRÁNÍ MENU NA MOBILU -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Zavření menu při kliknutí mimo na mobilu
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 900) {
+                if (!sidebar.contains(event.target) && !mobileBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
