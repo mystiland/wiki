@@ -29,6 +29,28 @@
             overflow-x: hidden;
         }
 
+        /* --- VIDITELNÝ INDIKÁTOR NA LEVÉ STRANĚ (NÁPOVĚDA PRO MENU) --- */
+        .sidebar-hint {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 60px;
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.65rem;
+            box-shadow: 2px 0 10px rgba(168, 85, 247, 0.5);
+            transition: width 0.3s ease, background 0.3s ease;
+            pointer-events: none; /* Myš projde skrz na spouštěč */
+        }
+
         /* --- HOVER / SIDEBAR PANEL (Vlevo) --- */
         .sidebar {
             position: fixed;
@@ -50,15 +72,19 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 25px;
+            width: 35px;
             height: 100%;
             z-index: 999;
         }
 
-        /* Otevření při najetí myši na spouštěč nebo na samotný sidebar */
+        /* Akce při najetí myši: vysune menu a schová/upraví indikátor */
         .sidebar-trigger:hover + .sidebar,
         .sidebar:hover {
             left: 0;
+        }
+
+        .sidebar-trigger:hover ~ .sidebar-hint {
+            opacity: 0;
         }
 
         .sidebar-header {
@@ -250,7 +276,6 @@
             font-size: 0.98rem;
         }
 
-        /* Aktivní stav rozbalení */
         .dropdown-box.active .dropdown-content {
             max-height: 500px;
             padding: 0 20px 20px 20px;
@@ -300,7 +325,7 @@
             font-family: monospace;
         }
 
-        /* --- DOLNÍ LIŠTA (PATIČKA) JAKO NA NORMÁLNÍM WEBU --- */
+        /* --- DOLNÍ LIŠTA (PATIČKA) --- */
         footer {
             background-color: #050308;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -431,8 +456,8 @@
             .sidebar.active {
                 left: 0;
             }
-            .sidebar-trigger {
-                display: none;
+            .sidebar-trigger, .sidebar-hint {
+                display: none; /* Na mobilech skryjeme hover prvky, používá se horní lišta */
             }
             .mobile-topbar {
                 display: flex;
@@ -463,8 +488,11 @@
         </button>
     </div>
 
-    <!-- HOVER SPOUŠTĚČ PRO DESKTOP (neviditelný pruh vlevo) -->
+    <!-- HOVER SPOUŠTĚČ A INDIKÁTOR PRO DESKTOP -->
     <div class="sidebar-trigger"></div>
+    <div class="sidebar-hint">
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
 
     <!-- BOČNÍ PANEL / WIKI NAVIGACE -->
     <nav class="sidebar" id="sidebar">
@@ -615,15 +643,13 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT PRO FUNKČNOST MENU A ROZKLÁDACÍCH BOXŮ -->
+    <!-- JAVASCRIPT -->
     <script>
-        // Otevírání bočního menu na mobilu
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
         }
 
-        // Zavření menu při kliknutí mimo na mobilu
         document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('sidebar');
             const mobileBtn = document.querySelector('.mobile-menu-btn');
@@ -635,7 +661,6 @@
             }
         });
 
-        // Otevírání a zavírání rozkládacích boxů (Java / Bedrock)
         function toggleDropdown(id) {
             const box = document.getElementById(id);
             box.classList.toggle('active');
