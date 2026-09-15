@@ -29,26 +29,32 @@
             overflow-x: hidden;
         }
 
-        /* --- VIDITELNÝ INDIKÁTOR NA LEVÉ STRANĚ (NÁPOVĚDA PRO MENU) --- */
+        /* --- VIDITELNÝ INDIKÁTOR NA LEVÉ STRANĚ S ANIMACÍ --- */
         .sidebar-hint {
             position: fixed;
             top: 50%;
             left: 0;
             transform: translateY(-50%);
-            width: 14px;
-            height: 60px;
+            width: 22px;
+            height: 75px;
             background: linear-gradient(135deg, #a855f7, #7c3aed);
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
             z-index: 998;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 0.65rem;
-            box-shadow: 2px 0 10px rgba(168, 85, 247, 0.5);
-            transition: width 0.3s ease, background 0.3s ease;
-            pointer-events: none; /* Myš projde skrz na spouštěč */
+            font-size: 0.8rem;
+            box-shadow: 3px 0 15px rgba(168, 85, 247, 0.6);
+            pointer-events: none;
+            animation: pulse-arrow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-arrow {
+            0% { transform: translateY(-50%) translateX(0); opacity: 0.8; }
+            50% { transform: translateY(-50%) translateX(4px); opacity: 1; filter: brightness(1.2); }
+            100% { transform: translateY(-50%) translateX(0); opacity: 0.8; }
         }
 
         /* --- HOVER / SIDEBAR PANEL (Vlevo) --- */
@@ -77,7 +83,7 @@
             z-index: 999;
         }
 
-        /* Akce při najetí myši: vysune menu a schová/upraví indikátor */
+        /* Akce při najetí myši: vysune menu a schová indikátor */
         .sidebar-trigger:hover + .sidebar,
         .sidebar:hover {
             left: 0;
@@ -85,6 +91,7 @@
 
         .sidebar-trigger:hover ~ .sidebar-hint {
             opacity: 0;
+            animation: none;
         }
 
         .sidebar-header {
@@ -457,7 +464,7 @@
                 left: 0;
             }
             .sidebar-trigger, .sidebar-hint {
-                display: none; /* Na mobilech skryjeme hover prvky, používá se horní lišta */
+                display: none;
             }
             .mobile-topbar {
                 display: flex;
@@ -488,7 +495,7 @@
         </button>
     </div>
 
-    <!-- HOVER SPOUŠTĚČ A INDIKÁTOR PRO DESKTOP -->
+    <!-- SPOUŠTĚČ A INDIKÁTOR PRO DESKTOP -->
     <div class="sidebar-trigger"></div>
     <div class="sidebar-hint">
         <i class="fa-solid fa-chevron-right"></i>
