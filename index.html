@@ -40,7 +40,7 @@
             background: linear-gradient(135deg, #a855f7, #7c3aed);
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
-            z-index: 1001; /* Aby byla vždy nad spouštěčem */
+            z-index: 1001;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -73,7 +73,6 @@
             box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* Zvětšená zóna pro zachycení myši (široká 50px, pokrývá i místo se šipkou) */
         .sidebar-trigger {
             position: fixed;
             top: 0;
@@ -83,13 +82,11 @@
             z-index: 1000;
         }
 
-        /* Akce při najetí myši na spouštěč NEBO přímo na sidebar */
         .sidebar-trigger:hover ~ .sidebar,
         .sidebar:hover {
             left: 0;
         }
 
-        /* Skrytí šipky, když je sidebar otevřený */
         .sidebar-trigger:hover ~ .sidebar-hint,
         .sidebar:hover ~ .sidebar-hint {
             opacity: 0;
@@ -178,7 +175,7 @@
             font-size: 1rem;
         }
 
-        /* --- HLAVNÍ OBSAH --- */
+        /* --- HLAVNÍ OBSAH (BEZ RÁMEČKU) --- */
         .main-content {
             flex-grow: 1;
             max-width: 900px;
@@ -187,16 +184,8 @@
             padding: 50px 20px 80px 20px;
         }
 
-        .wiki-card {
-            background: #120e1a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
-
         .wiki-title {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             color: #ffffff;
             margin-bottom: 10px;
@@ -238,7 +227,8 @@
 
         /* IP Box */
         .info-box {
-            background: rgba(255, 255, 255, 0.03);
+            background: #120e1a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-left: 4px solid #a855f7;
             padding: 20px;
             border-radius: 0 12px 12px 0;
@@ -247,7 +237,7 @@
 
         /* ROZKLÁDACÍ BOX (ACCORDION) PRO PŘIPOJENÍ */
         .dropdown-box {
-            background: rgba(255, 255, 255, 0.03);
+            background: #120e1a;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             margin: 20px 0;
@@ -474,9 +464,6 @@
             .main-content {
                 padding: 30px 15px;
             }
-            .wiki-card {
-                padding: 20px;
-            }
             .footer-container {
                 flex-direction: column;
                 gap: 40px;
@@ -511,11 +498,11 @@
         </div>
         
         <ul class="sidebar-menu">
-            <!-- Obecné Info -->
+            <!-- Obecné Info (Odkazy bez přípon .html) -->
             <div class="menu-category">Obecné Info</div>
-            <li><a href="/" class="active"><i class="fa-solid fa-house"></i> Vítej na WIKI</a></li>
-            <li><a href="/kdo_jsme"><i class="fa-solid fa-dragon"></i> Kdo vlastně jsme?</a></li>
-            <li><a href="#"><i class="fa-solid fa-circle-info"></i> Info pro nováčky</a></li>
+            <li><a href="./" class="active"><i class="fa-solid fa-house"></i> Vítej na WIKI</a></li>
+            <li><a href="kdo_jsme"><i class="fa-solid fa-dragon"></i> Kdo vlastně jsme?</a></li>
+            <li><a href="info_pro_novacky"><i class="fa-solid fa-circle-info"></i> Info pro nováčky</a></li>
 
             <!-- Komunita -->
             <div class="menu-category">Komunita</div>
@@ -523,84 +510,80 @@
 
             <!-- Survival info -->
             <div class="menu-category">Survival info</div>
-            <li><a href="#"><i class="fa-solid fa-coins"></i> Ekonomika</a></li>
-            <li><a href="#"><i class="fa-solid fa-skull-crossbones"></i> Bossové</a></li>
-            <li><a href="#"><i class="fa-solid fa-dungeon"></i> Dungeony</a></li>
-            <li><a href="#"><i class="fa-solid fa-fish"></i> Fishing (Rybaření)</a></li>
-            <li><a href="#"><i class="fa-solid fa-tree"></i> Přehled mechanik</a></li>
+            <li><a href="ekonomika"><i class="fa-solid fa-coins"></i> Ekonomika</a></li>
+            <li><a href="bossove"><i class="fa-solid fa-skull-crossbones"></i> Bossové</a></li>
+            <li><a href="dungeony"><i class="fa-solid fa-dungeon"></i> Dungeony</a></li>
+            <li><a href="rybareni"><i class="fa-solid fa-fish"></i> Fishing (Rybaření)</a></li>
+            <li><a href="mechaniky"><i class="fa-solid fa-tree"></i> Přehled mechanik</a></li>
         </ul>
     </nav>
 
-    <!-- HLAVNÍ OBSAH STRÁNKY -->
+    <!-- HLAVNÍ OBSAH STRÁNKY (BEZ RÁMEČKU) -->
     <div class="main-content">
-        <div class="wiki-card">
+        <h1 class="wiki-title">👋 Vítej na naší WIKI!</h1>
+        <div class="read-time">
+            <i class="fa-regular fa-clock"></i> Délka čtení: 1 min
+        </div>
+
+        <div class="wiki-text">
+            <p>
+                Vítej na oficiální wiki serveru <strong>MystiLand</strong>. Na této wiki najdeš všechny informace o tomto serveru, a pokud ne, tak se neboj nás informovat na našem <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank">Discord serveru</a>.
+            </p>
+            <p>
+                <strong>Jak nás můžeš informovat?</strong> Můžeš nás informovat na našem Discord serveru. Pokud tě zajímá více náš server, tak se koukni na naše sociální sítě nebo na náš web.
+            </p>
             
-            <h1 class="wiki-title">👋 Vítej na naší WIKI!</h1>
-            <div class="read-time">
-                <i class="fa-regular fa-clock"></i> Délka čtení: 1 min
+            <p>
+                🌐 <strong>Web:</strong> <a href="https://mystiland.eu" target="_blank">mystiland.eu</a><br>
+                🛒 <strong>Obchod:</strong> <a href="https://mystiland.eu/obchod" target="_blank">mystiland.eu/obchod</a>
+            </p>
+
+            <p style="margin-top: 15px; font-weight: 600; color: #ffffff;">
+                Přejeme příjemnou hru!
+            </p>
+
+            <!-- IP adresa -->
+            <div class="info-box" style="margin-top: 35px;">
+                <h3><i class="fa-solid fa-server" style="color: #a855f7;"></i> IP adresa serveru</h3>
+                <p style="margin-bottom: 0; font-size: 1.2rem; font-weight: bold; color: #fff;">
+                    mc.mystiland.eu
+                </p>
             </div>
 
-            <div class="wiki-text">
-                <p>
-                    Vítej na oficiální wiki serveru <strong>MystiLand</strong>. Na této wiki najdeš všechny informace o tomto serveru, a pokud ne, tak se neboj nás informovat na našem <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank">Discord serveru</a>.
-                </p>
-                <p>
-                    <strong>Jak nás můžeš informovat?</strong> Můžeš nás informovat na našem Discord serveru. Pokud tě zajímá více náš server, tak se koukni na naše sociální sítě nebo na náš web.
-                </p>
-                
-                <p>
-                    🌐 <strong>Web:</strong> <a href="https://mystiland.eu" target="_blank">mystiland.eu</a><br>
-                    🛒 <strong>Obchod:</strong> <a href="https://mystiland.eu/obchod" target="_blank">mystiland.eu/obchod</a>
-                </p>
+            <h2 style="color: #ffffff; font-size: 1.4rem; margin-top: 35px; margin-bottom: 15px;">
+                Návody pro připojení
+            </h2>
 
-                <p style="margin-top: 15px; font-weight: 600; color: #ffffff;">
-                    Přejeme příjemnou hru!
-                </p>
+            <!-- ROZKLÁDACÍ BOX: JAVA -->
+            <div class="dropdown-box" id="dropdownJava">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdownJava')">
+                    <span><i class="fa-brands fa-java" style="margin-right: 8px;"></i> Jak se připojit z Javy</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="dropdown-content">
+                    <p style="margin-top: 10px;">Na server MystiLand se můžeš připojit jak z originálního účtu, tak z neoriginálního (Warez).</p>
+                    <ol class="steps-list">
+                        <li>Zapni si Minecraft na požadované verzi a v hlavním menu klikni na <strong>Multiplayer</strong> (Hra pro více hráčů).</li>
+                        <li>Zvol možnost <strong>Add Server</strong> (Přidat server) pro uložení do seznamu, nebo <strong>Direct Connection</strong> (Přímé připojení) pro rychlý vstup.</li>
+                        <li>Do políčka pro IP adresu zadej adresu serveru <code>mc.mystiland.eu</code> a klikni na <strong>Done</strong> (Hotovo).</li>
+                        <li>Klikni na server v seznamu a zvol <strong>Join Server</strong> (Připojit se).</li>
+                        <li>Na výzvu hry potvrď stažení resource packu.</li>
+                        <li>Po načtení se zaregistruj příkazem <code>/register heslo heslo</code> (pokud už účet máš, přihlas se příkazem <code>/login heslo</code>).</li>
+                    </ol>
+                </div>
+            </div>
 
-                <!-- IP adresa -->
-                <div class="info-box" style="margin-top: 35px;">
-                    <h3><i class="fa-solid fa-server" style="color: #a855f7;"></i> IP adresa serveru</h3>
-                    <p style="margin-bottom: 0; font-size: 1.2rem; font-weight: bold; color: #fff;">
-                        mc.mystiland.eu
+            <!-- ROZKLÁDACÍ BOX: BEDROCK -->
+            <div class="dropdown-box" id="dropdownBedrock">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdownBedrock')">
+                    <span><i class="fa-solid fa-mobile-screen-button" style="margin-right: 8px;"></i> Jak se připojit z Bedrocku</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="dropdown-content">
+                    <p style="margin-top: 10px;">
+                        Připojení z Bedrock edice (mobilní zařízení, konzole, Windows 10/11 Bedrock) je <strong>již brzy</strong>! Sleduj náš Discord pro aktuální informace o spuštění.
                     </p>
                 </div>
-
-                <h2 style="color: #ffffff; font-size: 1.4rem; margin-top: 35px; margin-bottom: 15px;">
-                    Návody pro připojení
-                </h2>
-
-                <!-- ROZKLÁDACÍ BOX: JAVA -->
-                <div class="dropdown-box" id="dropdownJava">
-                    <div class="dropdown-header" onclick="toggleDropdown('dropdownJava')">
-                        <span><i class="fa-brands fa-java" style="margin-right: 8px;"></i> Jak se připojit z Javy</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="dropdown-content">
-                        <p style="margin-top: 10px;">Na server MystiLand se můžeš připojit jak z originálního účtu, tak z neoriginálního (Warez).</p>
-                        <ol class="steps-list">
-                            <li>Zapni si Minecraft na požadované verzi a v hlavním menu klikni na <strong>Multiplayer</strong> (Hra pro více hráčů).</li>
-                            <li>Zvol možnost <strong>Add Server</strong> (Přidat server) pro uložení do seznamu, nebo <strong>Direct Connection</strong> (Přímé připojení) pro rychlý vstup.</li>
-                            <li>Do políčka pro IP adresu zadej adresu serveru <code>mc.mystiland.eu</code> a klikni na <strong>Done</strong> (Hotovo).</li>
-                            <li>Klikni na server v seznamu a zvol <strong>Join Server</strong> (Připojit se).</li>
-                            <li>Na výzvu hry potvrď stažení resource packu.</li>
-                            <li>Po načtení se zaregistruj příkazem <code>/register heslo heslo</code> (pokud už účet máš, přihlas se příkazem <code>/login heslo</code>).</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- ROZKLÁDACÍ BOX: BEDROCK -->
-                <div class="dropdown-box" id="dropdownBedrock">
-                    <div class="dropdown-header" onclick="toggleDropdown('dropdownBedrock')">
-                        <span><i class="fa-solid fa-mobile-screen-button" style="margin-right: 8px;"></i> Jak se připojit z Bedrocku</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="dropdown-content">
-                        <p style="margin-top: 10px;">
-                            Připojení z Bedrock edice (mobilní zařízení, konzole, Windows 10/11 Bedrock) je <strong>již brzy</strong>! Sleduj náš Discord pro aktuální informace o spuštění.
-                        </p>
-                    </div>
-                </div>
-
             </div>
 
         </div>
