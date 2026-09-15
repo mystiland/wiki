@@ -95,7 +95,7 @@
             color: #a855f7;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin: 15px 0 8px 10px;
+            margin: 20px 0 8px 10px;
         }
 
         .menu-category:first-child {
@@ -106,10 +106,10 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 12px;
+            padding: 9px 12px;
             color: #cbd5e1;
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.93rem;
             border-radius: 8px;
             transition: all 0.2s ease;
         }
@@ -201,7 +201,7 @@
             text-decoration: underline;
         }
 
-        /* Info boxy / Zvýraznění */
+        /* IP Box */
         .info-box {
             background: rgba(255, 255, 255, 0.03);
             border-left: 4px solid #a855f7;
@@ -210,27 +210,68 @@
             margin: 30px 0;
         }
 
-        .info-box h3 {
-            color: #ffffff;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+        /* ROZKLÁDACÍ BOX (ACCORDION) PRO PŘIPOJENÍ */
+        .dropdown-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .dropdown-box:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .dropdown-header {
+            padding: 18px 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        .dropdown-header i {
+            color: #a855f7;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            padding: 0 20px;
+            color: #cbd5e1;
+            font-size: 0.98rem;
+        }
+
+        /* Aktivní stav rozbalení */
+        .dropdown-box.active .dropdown-content {
+            max-height: 500px;
+            padding: 0 20px 20px 20px;
+        }
+
+        .dropdown-box.active .dropdown-header i {
+            transform: rotate(180deg);
         }
 
         .steps-list {
             list-style: none;
             counter-reset: step-counter;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .steps-list li {
             position: relative;
             padding-left: 35px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #cbd5e1;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .steps-list li::before {
@@ -239,34 +280,149 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
             background: #a855f7;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
         }
 
-        /* --- DOLNÍ LIŠTA (PATIČKA) --- */
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e879f9;
+            font-family: monospace;
+        }
+
+        /* --- DOLNÍ LIŠTA (PATIČKA) JAKO NA NORMÁLNÍM WEBU --- */
         footer {
             background-color: #050308;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 40px 20px;
+            padding: 60px 40px 25px 40px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .footer-subtitle {
+            font-size: 0.8rem;
+            color: #8a859b;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .footer-col p {
+            color: #8a859b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #a855f7;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #a855f7;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #8a859b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #a855f7;
+        }
+
+        .copyright {
             text-align: center;
             color: #585366;
             font-size: 0.85rem;
+            margin-top: 25px;
         }
 
-        footer a {
-            color: #a855f7;
-            text-decoration: none;
+        .mojang-disclaimer {
+            font-size: 0.8rem;
+            color: #585366;
+            margin-top: 10px;
         }
 
-        /* --- RESPONSIVITA PRO MOBILY --- */
+        /* --- RESPONSIVITA --- */
         @media (max-width: 900px) {
             .sidebar {
                 left: -280px;
@@ -276,7 +432,7 @@
                 left: 0;
             }
             .sidebar-trigger {
-                display: none; /* Na mobilu vypneme hover trigger, používá se tlačítko */
+                display: none;
             }
             .mobile-topbar {
                 display: flex;
@@ -286,6 +442,10 @@
             }
             .wiki-card {
                 padding: 20px;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 40px;
             }
         }
     </style>
@@ -324,10 +484,13 @@
             <div class="menu-category">Komunita</div>
             <li><a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a></li>
 
-            <!-- Hra / Survival -->
-            <div class="menu-category">Hra</div>
-            <li><a href="#"><i class="fa-solid fa-tree"></i> Survival info</a></li>
-            <li><a href="#"><i class="fa-solid fa-gamepad"></i> Jak se připojit</a></li>
+            <!-- Survival info -->
+            <div class="menu-category">Survival info</div>
+            <li><a href="#"><i class="fa-solid fa-coins"></i> Ekonomika</a></li>
+            <li><a href="#"><i class="fa-solid fa-skull-crossbones"></i> Bossové</a></li>
+            <li><a href="#"><i class="fa-solid fa-dungeon"></i> Dungeony</a></li>
+            <li><a href="#"><i class="fa-solid fa-fish"></i> Fishing (Rybaření)</a></li>
+            <li><a href="#"><i class="fa-solid fa-tree"></i> Přehled mechanik</a></li>
         </ul>
     </nav>
 
@@ -357,35 +520,48 @@
                     Přejeme příjemnou hru!
                 </p>
 
-                <!-- Sekce připojení -->
-                <div class="info-box" style="margin-top: 40px;">
+                <!-- IP adresa -->
+                <div class="info-box" style="margin-top: 35px;">
                     <h3><i class="fa-solid fa-server" style="color: #a855f7;"></i> IP adresa serveru</h3>
                     <p style="margin-bottom: 0; font-size: 1.2rem; font-weight: bold; color: #fff;">
                         mc.mystiland.eu
                     </p>
                 </div>
 
-                <h2 style="color: #ffffff; font-size: 1.5rem; margin-top: 35px; margin-bottom: 15px;">
-                    Jak se připojit z Javy
+                <h2 style="color: #ffffff; font-size: 1.4rem; margin-top: 35px; margin-bottom: 15px;">
+                    Návody pro připojení
                 </h2>
-                <p>
-                    Na server MystiLand se můžeš připojit jak z originálního účtu, tak z neoriginálního (Warez).
-                </p>
 
-                <ol class="steps-list">
-                    <li>Zapni si Minecraft na požadované verzi a v hlavním menu klikni na <strong>Multiplayer</strong> (Hra pro více hráčů).</li>
-                    <li>Zvol možnost <strong>Add Server</strong> (Přidat server) pro uložení do seznamu, nebo <strong>Direct Connection</strong> (Přímé připojení) pro rychlý vstup.</li>
-                    <li>Do políčka pro IP adresu zadej adresu serveru <code>mc.mystiland.eu</code> (příp. <em>Již Brzy</em>) a klikni na <strong>Done</strong> (Hotovo).</li>
-                    <li>Klikni na server v seznamu a zvol <strong>Join Server</strong> (Připojit se).</li>
-                    <li>Na výzvu hry potvrď stažení resource packu.</li>
-                    <li>Po načtení se zaregistruj příkazem <code>/register heslo heslo</code> (pokud už účet máš, přihlas se příkazem <code>/login heslo</code>).</li>
-                </ol>
+                <!-- ROZKLÁDACÍ BOX: JAVA -->
+                <div class="dropdown-box" id="dropdownJava">
+                    <div class="dropdown-header" onclick="toggleDropdown('dropdownJava')">
+                        <span><i class="fa-brands fa-java" style="margin-right: 8px;"></i> Jak se připojit z Javy</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-content">
+                        <p style="margin-top: 10px;">Na server MystiLand se můžeš připojit jak z originálního účtu, tak z neoriginálního (Warez).</p>
+                        <ol class="steps-list">
+                            <li>Zapni si Minecraft na požadované verzi a v hlavním menu klikni na <strong>Multiplayer</strong> (Hra pro více hráčů).</li>
+                            <li>Zvol možnost <strong>Add Server</strong> (Přidat server) pro uložení do seznamu, nebo <strong>Direct Connection</strong> (Přímé připojení) pro rychlý vstup.</li>
+                            <li>Do políčka pro IP adresu zadej adresu serveru <code>mc.mystiland.eu</code> a klikni na <strong>Done</strong> (Hotovo).</li>
+                            <li>Klikni na server v seznamu a zvol <strong>Join Server</strong> (Připojit se).</li>
+                            <li>Na výzvu hry potvrď stažení resource packu.</li>
+                            <li>Po načtení se zaregistruj příkazem <code>/register heslo heslo</code> (pokud už účet máš, přihlas se příkazem <code>/login heslo</code>).</li>
+                        </ol>
+                    </div>
+                </div>
 
-                <div class="info-box" style="margin-top: 30px;">
-                    <h3><i class="fa-solid mobile-icon fa-mobile-screen-button" style="color: #a855f7;"></i> Jak se připojit z Bedrocku</h3>
-                    <p style="margin-bottom: 0; color: #cbd5e1;">
-                        Připojení z Bedrock edice je <strong>již brzy</strong>! Sleduj náš Discord pro aktuální informace.
-                    </p>
+                <!-- ROZKLÁDACÍ BOX: BEDROCK -->
+                <div class="dropdown-box" id="dropdownBedrock">
+                    <div class="dropdown-header" onclick="toggleDropdown('dropdownBedrock')">
+                        <span><i class="fa-solid fa-mobile-screen-button" style="margin-right: 8px;"></i> Jak se připojit z Bedrocku</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-content">
+                        <p style="margin-top: 10px;">
+                            Připojení z Bedrock edice (mobilní zařízení, konzole, Windows 10/11 Bedrock) je <strong>již brzy</strong>! Sleduj náš Discord pro aktuální informace o spuštění.
+                        </p>
+                    </div>
                 </div>
 
             </div>
@@ -393,14 +569,55 @@
         </div>
     </div>
 
-    <!-- PATIČKA -->
+    <!-- PLNÁ PATIČKA (FOOTER) -->
     <footer>
-        © 2026 Mystiland.eu | Všechna práva vyhrazena. 
-        <br>Nejedná se o oficiální produkt Minecraftu. Nejsem spojen se společností Mojang Studios.
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-header">
+                    <img src="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068" alt="MystiLand Logo" class="footer-logo">
+                    <div>
+                        <div class="footer-title">MYSTILAND.EU</div>
+                        <div class="footer-subtitle">MINECRAFT SERVER</div>
+                    </div>
+                </div>
+                <p>
+                    MystiLand je nově vznikající Minecraft server s důrazem na skvělou komunitu a originální zážitek ze hry.
+                </p>
+                <p class="mojang-disclaimer">
+                    Nejedná se o oficiální produkt Minecraftu. Nejsem spojen se společností Mojang Studios.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>KONTAKTY</h4>
+                <p>E-mail: <a href="mailto:mystiland.info@gmail.com" style="color: #a855f7; text-decoration: none; font-weight: 600;">mystiland.info@gmail.com</a></p>
+                
+                <div class="social-links">
+                    <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank" class="social-icon" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.youtube.com/@MystiLand" target="_blank" class="social-icon" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@mystiland.eu" target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/mystiland.eu/" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61594093271514" target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>INFO</h4>
+                <ul class="footer-links">
+                    <li><a href="https://mystiland.eu/documents/podminky_a_mojang.pdf" target="_blank">Podmínky a Mojang</a></li>
+                    <li><a href="https://mystiland.eu/documents/odpovednost_a_pravidla.pdf" target="_blank">Odpovědnost & Pravidla</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 Mystiland.eu | Všechna práva vyhrazena.
+        </div>
     </footer>
 
-    <!-- JAVASCRIPT PRO OTEVÍRÁNÍ MENU NA MOBILU -->
+    <!-- JAVASCRIPT PRO FUNKČNOST MENU A ROZKLÁDACÍCH BOXŮ -->
     <script>
+        // Otevírání bočního menu na mobilu
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
@@ -417,6 +634,12 @@
                 }
             }
         });
+
+        // Otevírání a zavírání rozkládacích boxů (Java / Bedrock)
+        function toggleDropdown(id) {
+            const box = document.getElementById(id);
+            box.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
