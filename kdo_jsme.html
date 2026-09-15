@@ -175,7 +175,7 @@
             font-size: 1rem;
         }
 
-        /* --- HLAVNÍ OBSAH --- */
+        /* --- HLAVNÍ OBSAH (BEZ RÁMEČKU) --- */
         .main-content {
             flex-grow: 1;
             max-width: 900px;
@@ -184,16 +184,8 @@
             padding: 50px 20px 80px 20px;
         }
 
-        .wiki-card {
-            background: #120e1a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
-
         .wiki-title {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             color: #ffffff;
             margin-bottom: 10px;
@@ -233,7 +225,7 @@
             text-decoration: underline;
         }
 
-        /* Tým / Kartičky stylu */
+        /* Kartičky hodnot */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -242,7 +234,7 @@
         }
 
         .team-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: #120e1a;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 20px;
@@ -413,9 +405,6 @@
             .main-content {
                 padding: 30px 15px;
             }
-            .wiki-card {
-                padding: 20px;
-            }
             .footer-container {
                 flex-direction: column;
                 gap: 40px;
@@ -450,11 +439,11 @@
         </div>
         
         <ul class="sidebar-menu">
-            <!-- Obecné Info -->
+            <!-- Obecné Info (Odkazy bez přípon) -->
             <div class="menu-category">Obecné Info</div>
-            <li><a href="index.html"><i class="fa-solid fa-house"></i> Vítej na WIKI</a></li>
-            <li><a href="kdo_jsme.html" class="active"><i class="fa-solid fa-dragon"></i> Kdo vlastně jsme?</a></li>
-            <li><a href="#"><i class="fa-solid fa-circle-info"></i> Info pro nováčky</a></li>
+            <li><a href="./"><i class="fa-solid fa-house"></i> Vítej na WIKI</a></li>
+            <li><a href="kdo_jsme" class="active"><i class="fa-solid fa-dragon"></i> Kdo vlastně jsme?</a></li>
+            <li><a href="info_pro_novacky"><i class="fa-solid fa-circle-info"></i> Info pro nováčky</a></li>
 
             <!-- Komunita -->
             <div class="menu-category">Komunita</div>
@@ -462,59 +451,54 @@
 
             <!-- Survival info -->
             <div class="menu-category">Survival info</div>
-            <li><a href="#"><i class="fa-solid fa-coins"></i> Ekonomika</a></li>
-            <li><a href="#"><i class="fa-solid fa-skull-crossbones"></i> Bossové</a></li>
-            <li><a href="#"><i class="fa-solid fa-dungeon"></i> Dungeony</a></li>
-            <li><a href="#"><i class="fa-solid fa-fish"></i> Fishing (Rybaření)</a></li>
-            <li><a href="#"><i class="fa-solid fa-tree"></i> Přehled mechanik</a></li>
+            <li><a href="ekonomika"><i class="fa-solid fa-coins"></i> Ekonomika</a></li>
+            <li><a href="bossove"><i class="fa-solid fa-skull-crossbones"></i> Bossové</a></li>
+            <li><a href="dungeony"><i class="fa-solid fa-dungeon"></i> Dungeony</a></li>
+            <li><a href="rybareni"><i class="fa-solid fa-fish"></i> Fishing (Rybaření)</a></li>
+            <li><a href="mechaniky"><i class="fa-solid fa-tree"></i> Přehled mechanik</a></li>
         </ul>
     </nav>
 
-    <!-- HLAVNÍ OBSAH STRÁNKY -->
+    <!-- HLAVNÍ OBSAH STRÁNKY (BEZ RÁMEČKU) -->
     <div class="main-content">
-        <div class="wiki-card">
-            
-            <h1 class="wiki-title">🐉 Kdo vlastně jsme?</h1>
-            <div class="read-time">
-                <i class="fa-regular fa-clock"></i> Délka čtení: 2 min
-            </div>
+        <h1 class="wiki-title">🐉 Kdo vlastně jsme?</h1>
+        <div class="read-time">
+            <i class="fa-regular fa-clock"></i> Délka čtení: 2 min
+        </div>
 
-            <div class="wiki-text">
-                <p>
-                    <strong>MystiLand</strong> je nově vznikající československý Minecraft server, za kterým stojí tým nadšenců do hry, vývojářů a tvůrců, kteří si řekli, že chtějí vytvořit místo, kde to bude hráče opět bavit bez zbytečných lagů a toxického prostředí.
-                </p>
-                <p>
-                    Naším hlavním cílem je nabídnout poctivý survival zážitek obohacený o originální herní mechaniky, vlastní dungeony, zajímavou ekonomiku a hlavně férovou a přátelskou komunitu.
-                </p>
+        <div class="wiki-text">
+            <p>
+                <strong>MystiLand</strong> je nově vznikající československý Minecraft server, za kterým stojí tým nadšenců do hry, vývojářů a tvůrců, kteří si řekli, že chtějí vytvořit místo, kde to bude hráče opět bavit bez zbytečných lagů a toxického prostředí.
+            </p>
+            <p>
+                Naším hlavním cílem je nabídnout poctivý survival zážitek obohacený o originální herní mechaniky, vlastní dungeony, zajímavou ekonomiku a hlavně férovou a přátelskou komunitu.
+            </p>
 
-                <h2 style="color: #ffffff; font-size: 1.4rem; margin-top: 35px; margin-bottom: 20px;">
-                    Naše hlavní hodnoty
-                </h2>
+            <h2 style="color: #ffffff; font-size: 1.4rem; margin-top: 35px; margin-bottom: 20px;">
+                Naše hlavní hodnoty
+            </h2>
 
-                <div class="team-grid">
-                    <div class="team-card">
-                        <i class="fa-solid fa-users"></i>
-                        <h3>Skvělá komunita</h3>
-                        <p>Klademe důraz na přátelskou atmosféru a vzájemný respekt mezi hráči.</p>
-                    </div>
-                    <div class="team-card">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <h3>Originalita</h3>
-                        <p>Vlastní dungeony, bossové a propracované systémy, které jinde nenajdeš.</p>
-                    </div>
-                    <div class="team-card">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <h3>Férové prostředí</h3>
-                        <p>Aktivní a nestranný A-tým, který dbá na dodržování pravidel a pořádek.</p>
-                    </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>Skvělá komunita</h3>
+                    <p>Klademe důraz na přátelskou atmosféru a vzájemný respekt mezi hráči.</p>
                 </div>
-
-                <p style="margin-top: 30px;">
-                    Chceš se stát součástí našeho příběhu hned od začátku? Připoj se na náš <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank">Discord server</a>, kde s námi můžeš diskutovat o novinkách a pomoci nám budovat budoucnost MystiLandu!
-                </p>
-
+                <div class="team-card">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <h3>Originalita</h3>
+                    <p>Vlastní dungeony, bossové a propracované systémy, které jinde nenajdeš.</p>
+                </div>
+                <div class="team-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>Férové prostředí</h3>
+                    <p>Aktivní a nestranný A-tým, který dbá na dodržování pravidel a pořádek.</p>
+                </div>
             </div>
 
+            <p style="margin-top: 30px;">
+                Chceš se stát součástí našeho příběhu hned od začátku? Připoj se na náš <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank">Discord server</a>, kde s námi můžeš diskutovat o novinkách a pomoci nám budovat budoucnost MystiLandu!
+            </p>
         </div>
     </div>
 
