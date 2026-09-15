@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info pro nováčky – MystiLand</title>
+    
+    <!-- Logo v kartě prohlížeče -->
+    <link rel="icon" type="image/png" href="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068">
+    
+    <!-- FontAwesome Ikony -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #0b0711;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- VIDITELNÝ INDIKÁTOR NA LEVÉ STRANĚ --- */
+        .sidebar-hint {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 80px;
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.85rem;
+            box-shadow: 3px 0 15px rgba(168, 85, 247, 0.6);
+            pointer-events: none;
+            animation: pulse-arrow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-arrow {
+            0% { transform: translateY(-50%) translateX(0); opacity: 0.8; }
+            50% { transform: translateY(-50%) translateX(4px); opacity: 1; filter: brightness(1.2); }
+            100% { transform: translateY(-50%) translateX(0); opacity: 0.8; }
+        }
+
+        /* --- HOVER / SIDEBAR PANEL (Vlevo) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: #120e1a;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transition: left 0.3s ease;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar-trigger {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .sidebar-trigger:hover ~ .sidebar,
+        .sidebar:hover {
+            left: 0;
+        }
+
+        .sidebar-trigger:hover ~ .sidebar-hint,
+        .sidebar:hover ~ .sidebar-hint {
+            opacity: 0;
+            animation: none;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: #09060e;
+        }
+
+        .sidebar-header img {
+            height: 35px;
+            width: auto;
+        }
+
+        .sidebar-header span {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #a855f7;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin: 20px 0 8px 10px;
+        }
+
+        .menu-category:first-child {
+            margin-top: 0;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.93rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            background: rgba(168, 85, 247, 0.15);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        /* --- MOBILNÍ LIŠTA A TLAČÍTKO --- */
+        .mobile-topbar {
+            display: none;
+            background: #120e1a;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* --- HLAVNÍ OBSAH (BEZ RÁMEČKU) --- */
+        .main-content {
+            flex-grow: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 50px 20px 80px 20px;
+        }
+
+        .wiki-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .read-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: #c084fc;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .wiki-text p {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .wiki-text a {
+            color: #c084fc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .wiki-text a:hover {
+            color: #e879f9;
+            text-decoration: underline;
+        }
+
+        /* Rádce / Krok za krokem boxy */
+        .guide-step {
+            background: #120e1a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #a855f7;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .guide-step h3 {
+            color: #ffffff;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-step h3 i {
+            color: #a855f7;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e879f9;
+            font-family: monospace;
+        }
+
+        /* --- DOLNÍ LIŠTA (PATIČKA) --- */
+        footer {
+            background-color: #050308;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 40px 25px 40px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .footer-subtitle {
+            font-size: 0.8rem;
+            color: #8a859b;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .footer-col p {
+            color: #8a859b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #a855f7;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #a855f7;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #8a859b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #a855f7;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #585366;
+            font-size: 0.85rem;
+            margin-top: 25px;
+        }
+
+        .mojang-disclaimer {
+            font-size: 0.8rem;
+            color: #585366;
+            margin-top: 10px;
+        }
+
+        /* --- RESPONSIVITA --- */
+        @media (max-width: 900px) {
+            .sidebar {
+                left: -280px;
+                transition: left 0.3s ease;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .sidebar-trigger, .sidebar-hint {
+                display: none;
+            }
+            .mobile-topbar {
+                display: flex;
+            }
+            .main-content {
+                padding: 30px 15px;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MOBILNÍ HORNÍ LIŠTA S TLAČÍTKEM MENU -->
+    <div class="mobile-topbar">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068" alt="Logo" style="height: 30px;">
+            <span style="font-weight: 800; font-size: 1rem;">MystiLand WIKI</span>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i> Menu
+        </button>
+    </div>
+
+    <!-- SPOUŠTĚČ A INDIKÁTOR PRO DESKTOP -->
+    <div class="sidebar-trigger"></div>
+    <div class="sidebar-hint">
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+
+    <!-- BOČNÍ PANEL / WIKI NAVIGACE -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068" alt="Logo">
+            <span>MystiLand WIKI</span>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <!-- Obecné Info (Odkazy bez přípon) -->
+            <div class="menu-category">Obecné Info</div>
+            <li><a href="./"><i class="fa-solid fa-house"></i> Vítej na WIKI</a></li>
+            <li><a href="kdo_jsme"><i class="fa-solid fa-dragon"></i> Kdo vlastně jsme?</a></li>
+            <li><a href="info_pro_novacky" class="active"><i class="fa-solid fa-circle-info"></i> Info pro nováčky</a></li>
+
+            <!-- Komunita -->
+            <div class="menu-category">Komunita</div>
+            <li><a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a></li>
+
+            <!-- Survival info -->
+            <div class="menu-category">Survival info</div>
+            <li><a href="ekonomika"><i class="fa-solid fa-coins"></i> Ekonomika</a></li>
+            <li><a href="bossove"><i class="fa-solid fa-skull-crossbones"></i> Bossove</a></li>
+            <li><a href="dungeony"><i class="fa-solid fa-dungeon"></i> Dungeony</a></li>
+            <li><a href="rybareni"><i class="fa-solid fa-fish"></i> Fishing (Rybaření)</a></li>
+            <li><a href="mechaniky"><i class="fa-solid fa-tree"></i> Přehled mechanik</a></li>
+        </ul>
+    </nav>
+
+    <!-- HLAVNÍ OBSAH STRÁNKY (BEZ RÁMEČKU) -->
+    <div class="main-content">
+        <h1 class="wiki-title">💡 Info pro nováčky</h1>
+        <div class="read-time">
+            <i class="fa-regular fa-clock"></i> Délka čtení: 3 min
+        </div>
+
+        <div class="wiki-text">
+            <p>
+                Teprve ses připojil na server <strong>MystiLand</strong> a nevíš, co dřív? Připravili jsme pro tebe rychlého průvodce, který ti pomůže úspěšně začít a vyhnout se zbytečným problémům.
+            </p>
+
+            <div class="guide-step">
+                <h3><i class="fa-solid fa-key"></i> 1. Registrace a zabezpečení účtu</h3>
+                <p>
+                    Hned po prvním připojení na server budeš vyzván k registraci. Napište do chatu příkaz <code>/register [heslo] [heslo]</code>. Při dalším připojení se pak budeš přihlašovat příkazem <code>/login [heslo]</code>. <strong>Nikdy</strong> své heslo nikomu neříkej!
+                </p>
+            </div>
+
+            <div class="guide-step">
+                <h3><i class="fa-solid fa-shield-cat"></i> 2. Ochrana tvých věcí (Claimování)</h3>
+                <p>
+                    Nechceš, aby ti někdo vykradl nebo zničil tvůj dům? Nauč se včas chránit své území pomocí claimování. Zabráníš tím griefingu a tvé věci zůstanou v naprostém bezpečí. Podrobné návody na claimy najdeš ve hře nebo v sekci mechanik.
+                </p>
+            </div>
+
+            <div class="guide-step">
+                <h3><i class="fa-solid fa-coins"></i> 3. Jak vydělat první peníze</h3>
+                <p>
+                    Pro začátek se vyplatí těžit suroviny, prodávat přebytky v admin shopech nebo vyzkoušet specializované <a href="rybareni">rybaření</a>, které ti může vynést zajímavý zisk. Mrkni také na stránku <a href="ekonomika">Ekonomika</a>, kde se dozvíš víc.
+                </p>
+            </div>
+
+            <div class="guide-step">
+                <h3><i class="fa-solid fa-book-skull"></i> 4. Pozor na nebezpečí a dungeony</h3>
+                <p>
+                    Svět MystiLandu skrývá řadu tajemství. Jakmile si vylepšíš základní výbavu, můžeš se vydat prozkoumat <a href="dungeony">dungeony</a> nebo poměřit síly s místními <a href="bossove">bossy</a>. Nechod nepřipravený!
+                </p>
+            </div>
+
+            <p style="margin-top: 30px;">
+                Máš jakékoliv otázky? Neváhej se zeptat zkušenějších hráčů ve hře nebo na našem <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank">Discord serveru</a>, kde ti rádi pomůžeme.
+            </p>
+        </div>
+    </div>
+
+    <!-- PLNÁ PATIČKA (FOOTER) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-header">
+                    <img src="https://github.com/user-attachments/assets/11cf6009-7c8a-4266-826f-40b9c32d7068" alt="MystiLand Logo" class="footer-logo">
+                    <div>
+                        <div class="footer-title">MYSTILAND.EU</div>
+                        <div class="footer-subtitle">MINECRAFT SERVER</div>
+                    </div>
+                </div>
+                <p>
+                    MystiLand je nově vznikající Minecraft server s důrazem na skvělou komunitu a originální zážitek ze hry.
+                </p>
+                <p class="mojang-disclaimer">
+                    Nejedná se o oficiální produkt Minecraftu. Nejsem spojen se společností Mojang Studios.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>KONTAKTY</h4>
+                <p>E-mail: <a href="mailto:mystiland.info@gmail.com" style="color: #a855f7; text-decoration: none; font-weight: 600;">mystiland.info@gmail.com</a></p>
+                
+                <div class="social-links">
+                    <a href="https://discord.com/invite/3GWM5Vy2HV" target="_blank" class="social-icon" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.youtube.com/@MystiLand" target="_blank" class="social-icon" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@mystiland.eu" target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/mystiland.eu/" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61594093271514" target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>INFO</h4>
+                <ul class="footer-links">
+                    <li><a href="https://mystiland.eu/documents/podminky_a_mojang.pdf" target="_blank">Podmínky a Mojang</a></li>
+                    <li><a href="https://mystiland.eu/documents/odpovednost_a_pravidla.pdf" target="_blank">Odpovědnost & Pravidla</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 Mystiland.eu | Všechna práva vyhrazena.
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 900) {
+                if (!sidebar.contains(event.target) && !mobileBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
